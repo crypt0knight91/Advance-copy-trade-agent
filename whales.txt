@@ -1,0 +1,21 @@
+# ════════════════════════════════════════════════════════════════════
+#  WHALE LIST — Edit this file anytime. Restart bot to apply changes.
+#
+#  Format (one whale per line):
+#  wallet_address | profile_url | nickname
+#
+#  Rules:
+#  - Lines starting with # are comments (ignored)
+#  - Blank lines are ignored
+#  - nickname is optional (auto-extracted from profile_url if missing)
+#  - All wallets here are trusted — no win rate filter applied
+#
+#  After editing: save file → Ctrl+C to stop bot → python main.py
+# ════════════════════════════════════════════════════════════════════
+
+# Paste your 4-5 whale addresses below. Examples:
+# 0xc2e7800b5af46e6093872b177b7a5e7f0563be51 | https://polymarket.com/@beachboy4 | beachboy4
+# 0x507e52ef684ca2dd91f90a9d26d149dd3288beae | https://polymarket.com/@gamblingisallyouneed | gamblingisallyouneed
+# 0x2652dd1140c3b9e69c8852264cf8dbe727672a1d | https://polymarket.com/@punisher2022 | punisher2022
+# 0x8c80d213c0cbad777d06ee3f58f6ca4bc03102c3 | https://polymarket.com/@secondwindcapital | secondwindcapital
+
