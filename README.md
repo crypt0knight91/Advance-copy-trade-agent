@@ -1,195 +1,197 @@
-# 🐋 Whale Mirror Bot v2
+# Advance-copy-trade-agent
 
-Automated Polymarket copy-trading bot for Android (Termux). Monitors whale wallets you choose and mirrors their trades on your account in real time.
+![License](https://img.shields.io/badge/license-MIT-blue) ![Python](https://img.shields.io/badge/python-3.8+-green) ![Stars](https://img.shields.io/github/stars/YOUR_USERNAME/REPO?style=social)
 
----
-
-## Features
-
-- **Real-time monitoring** — polls whale wallets every 1 second
-- **Smart copy logic** — copies BUY signals, mirrors exits when whale closes
-- **EV gate** — Expected Value + Kelly Criterion + Bayesian updating (skip negative EV trades)
-- **Market order support** — copies market orders if spread < 3¢ and price is stable
-- **NO outcome support** — correctly copies YES and NO trades
-- **Duplicate guard** — one position per market, no double exposure
-- **Cluster detection** — 2+ whales same market = boosted size ($6 instead of $4)
-- **Sybil detection** — ignores coordinated fake volume
-- **Stop loss** — auto-closes at -27% from entry
-- **Max hold** — force-closes positions after 72 hours
-- **Loss protection** — daily soft pause (-10%), hard halt (-20%), total halt (-40%)
-- **Auto-resume** — restarts cleanly after crash, reconciles with Polymarket
-- **Unfilled order cleanup** — cancels stuck limit orders automatically
-- **Dark mobile dashboard** — live positions, PnL, whale scores at `localhost:8080`
-- **Kill switch** — `touch KILL` stops all trading instantly
+> A trading bot built with Python
 
 ---
 
-## Requirements
+## 📋 Table of Contents
 
-- Android phone with [Termux](https://f-droid.org/packages/com.termux/) (F-Droid version)
-- Polymarket account (Gmail/Magic wallet)
-- Python 3.10+
+- [Features](#-features)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
+- [Configuration](#-configuration)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Support](#-support-the-developer)
 
 ---
 
-## Installation
+## ✨ Features
+
+- ✅ Automated task execution
+- ✅ Configurable via environment variables
+- ✅ Lightweight and fast
+- ✅ Easy to extend and customize
+
+---
+
+## 📦 Requirements
+
+- Python 3.8+
+- Dependencies listed in `requirements.txt`
+
+---
+
+## 🚀 Installation
+
+### Step 1: Clone the repository
 
 ```bash
-# Install dependencies
-pkg update -y && pkg install python git -y
-pip install requests python-dotenv flask py-clob-client
+git clone https://github.com/YOUR_USERNAME/Advance-copy-trade-agent
+cd Advance-copy-trade-agent
+```
 
-# Clone repo
-git clone https://github.com/YOURUSERNAME/whale-mirror-bot.git
-cd whale-mirror-bot
+### Step 2: Create virtual environment
 
-# Configure
-cp env.example .env
-nano .env
+```bash
+python -m venv venv
+
+# Linux/macOS
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+
+# Termux (Android)
+source venv/bin/activate
+```
+
+### Step 3: Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 4: Configure environment
+
+```bash
+cp .env.example .env
+# Edit .env with your configuration
 ```
 
 ---
 
-## Configuration
+## 💻 Usage
 
-Edit `.env` with your credentials:
+### Basic Usage
+
+```bash
+python main.py
+```
+
+### Run in background (Linux/Termux)
+
+```bash
+nohup python main.py > bot.log 2>&1 &
+```
+
+### Run with screen session
+
+```bash
+screen -S advance-copy-trade-agent
+python main.py
+# Detach: Ctrl+A then D
+```
+
+---
+
+## 📁 Project Structure
+
+```
+Advance-copy-trade-agent/
+├── config.py
+├── dashboard.py
+├── ev_gate.py
+├── executor.py
+├── filters.py
+├── main.py
+├── monitor.py
+├── positions.py
+├── protection.py
+├── scoring.py
+├── state.py
+├── whale_scanner.py
+└── ... (2 more files)
+```
+
+---
+
+## ⚙️ Configuration
+
+Create a `.env` file based on `.env.example`:
 
 ```env
-# Get from: reveal.magic.link/polymarket
-POLY_PRIVATE_KEY=0xYourPrivateKeyHere
-
-# Your Polymarket proxy wallet address
-MY_PROXY_WALLET=0xYourProxyWalletHere
-
-# Start with true, flip to false after testing
-DRY_RUN=true
-
-BANKROLL=100.0
-TRADE_SIZE_USD=4.0
+# Add your configuration here
+# Example:
+# API_KEY=your_api_key_here
+# DEBUG=false
 ```
 
-> ⚠️ **Never share your `.env` file or commit it to Git. Your private key is in there.**
+> **Never commit `.env` to version control.**
 
 ---
 
-## Add Your Whales
+## 🤝 Contributing
 
-Edit `whales.txt` — one whale per line:
+Contributions are welcome! Here's how:
 
-```
-0xc2e7800b5af46e6093872b177b7a5e7f0563be51 | https://polymarket.com/@beachboy4 | beachboy4
-0x507e52ef684ca2dd91f90a9d26d149dd3288beae | https://polymarket.com/@gamblingisallyouneed
-```
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'feat: add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
-Lines starting with `#` are comments. Restart bot after editing.
-
----
-
-## Running
-
-```bash
-# Simple run
-python main.py
-
-# Background (survives closing Termux)
-screen -S whale
-python main.py
-# Ctrl+A then D to detach
-# screen -r whale to reattach
-```
-
-**Dashboard:** Open Chrome on your phone → `http://localhost:8080`
+Please follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
 
 ---
 
-## Controls
-
-| Action | Command |
-|---|---|
-| Stop all trading | `touch KILL` |
-| Pause one whale | `touch PAUSE_0xWHALEADDRESS` |
-| Resume | `rm KILL` then restart |
-| Check state | `cat state/BOT_MEMORY.md` |
-| View audit log | `tail -f state/audit.log` |
-
----
-
-## File Structure
+## 📄 License
 
 ```
-whale-mirror-bot/
-├── main.py          # Orchestrator — startup, main loop, decision engine
-├── whales.txt       # Your whale list (edit anytime, restart to apply)
-├── config.py        # All settings with defaults
-├── env.example      # Template for your .env file
-├── monitor.py       # Whale polling, position diff, market data
-├── executor.py      # Order placement via py-clob-client
-├── positions.py     # Position lifecycle, SL/TP/runner logic
-├── filters.py       # Spread, depth, slippage, pump, cluster, sybil
-├── ev_gate.py       # EV formula, Kelly criterion, Bayesian update
-├── protection.py    # Loss limits, kill switch, per-whale pause
-├── state.py         # SQLite persistence, resume logic
-├── scoring.py       # Trust scoring (used by whale_scanner.py)
-├── dashboard.py     # Flask dark mobile UI
-├── whale_scanner.py # Standalone tool to rank whale wallets
-└── state/           # Runtime data (excluded from git)
-    ├── bot_state.db # SQLite: positions, audit, session
-    ├── BOT_MEMORY.md# Human-readable state snapshot
-    └── audit.log    # Full action log
+MIT License
+
+Copyright (c) 2024
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ```
 
 ---
 
-## Trade Flow
+---
 
+## 💖 Support the Developer
+
+If this project helped you, consider supporting its development:
+
+**ETH / EVM Chains:**
 ```
-Whale opens position
-        ↓
-Bot detects (within 1 second)
-        ↓
-Filters: capacity → market quality → pump check
-      → spread/depth/slippage → EV gate
-        ↓
-Pass → place limit order at whale's price
-        ↓
-Position tracked: SL / max hold / whale exit monitoring
-        ↓
-Exit: whale closes / SL hits / 72h timeout
+0x1c6A81A22b97441E58c976819E9e413f28e35F18
 ```
 
----
 
-## Key Settings
+> Every contribution, no matter how small, keeps this project alive. 🙏
 
-| Setting | Default | Description |
-|---|---|---|
-| `TRADE_SIZE_USD` | $4.00 | Per trade size (Kelly may size lower) |
-| `CLUSTER_BOOST_USD` | $6.00 | Size when 2+ whales agree |
-| `SL_PCT` | 27% | Stop loss from entry |
-| `MAX_HOLD_HOURS` | 72h | Force-close after this long |
-| `MAX_OPEN_POSITIONS` | 5 | Max simultaneous trades |
-| `DAILY_SOFT_PCT` | 10% | Pause new entries at this daily loss |
-| `DAILY_HARD_PCT` | 20% | Full halt at this daily loss |
-| `MIN_WHALE_USD` | $6 | Ignore whale trades smaller than this |
 
----
+<div align="center">
 
-## Whale Scanner
+**Built with ❤️ and Python**
 
-Rank all wallets by performance:
+*Star ⭐ this repo if you find it useful!*
 
-```bash
-python whale_scanner.py           # 30-day window
-python whale_scanner.py --days 60 # wider window
-python whale_scanner.py --out csv # save to whale_ranks.csv
-```
-
----
-
-## Disclaimer
-
-This bot trades real money on prediction markets. Past whale performance does not guarantee future results. Use at your own risk. Start with `DRY_RUN=true` and small amounts.
-
----
-
-*Built for Termux on Android. Tested on OnePlus 12R.*
+</div>
