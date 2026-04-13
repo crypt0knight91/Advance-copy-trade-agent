@@ -41,7 +41,7 @@
 ### Step 1: Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Advance-copy-trade-agent
+git clone https://github.com/crypt0knight91/Advance-copy-trade-agent
 cd Advance-copy-trade-agent
 ```
 
