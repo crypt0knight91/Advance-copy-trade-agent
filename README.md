@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue) ![Python](https://img.shields.io/badge/python-3.8+-green) ![Stars](https://img.shields.io/github/stars/YOUR_USERNAME/REPO?style=social)
 
-> A trading bot built with Python
+> An advance trading bot built with Python
 
 ---
 
